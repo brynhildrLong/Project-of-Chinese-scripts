@@ -28,24 +28,32 @@ The info we want is in tag **"TD"**, the text and the image.
 ### Python Code
 Using lib **"BeatifulSoup"** and **"Request"**
 
+Beautiful Soup is a Python library for pulling data out of HTML and XML files. It works with your favorite parser to provide idiomatic ways of navigating, searching, and modifying the parse tree. It commonly saves programmers hours or days of work.
+
+Requests is an open source Python HTTP library based on the Apache2 protocol.
+
+Import the lib
 ```python
 from bs4 import BeautifulSoup
 import requests
 import os
+```
 
 
+
+```python
 class Orcale_Picture:
-    def __init__(self):  # 类的初始化操作
+    def __init__(self):  # initialize the calss
         self.headers = {
-            # 给请求指定一个请求头来模拟chrome浏览器
+            # setting a header like Chrome browser
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64)'
                           ' AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
-        self.web_url = 'http://9610.com/jiagu/bian/def.htm#d'   # 要访问的网页地址
-        self.folder_path = 'C:\\Users\\brynh\\jiagu'  # 设置图片要存放的文件目录
+        self.web_url = 'http://9610.com/jiagu/bian/def.htm#d'   # the scraping web url
+        self.folder_path = 'C:\\Users\\brynh\\jiagu'  # saving path
         self.primary_url = 'http://9610.com/jiagu/bian/'
 
-    def request(self,url):  # 返回网页response
-        r = requests.get(url, self.headers)  # 向目标url地址发送get请求，返回一个response对象
+    def request(self,url):  
+        r = requests.get(url, self.headers)  # sending a GET request to the web page
         r.encoding = 'gbk'
         return r
 
@@ -68,7 +76,6 @@ class Orcale_Picture:
             self.save_img(self.primary_url+download_url,label_list[i]+'.jpg')
             i += 1
 
-
     def mkdir(self,path):
         path = path.strip()
         is_exists = os.path.exists(path)
@@ -82,7 +89,7 @@ class Orcale_Picture:
     def save_img(self,url,name):
         img = self.request(url)
         f = open(name,'ab')
-        f.write(img.content)
+        f.write(img.content) 
         print(name,"saved successfully")
         f.close()
 
